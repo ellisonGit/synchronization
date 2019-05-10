@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gdeastriver.datasync.dao.MealRecordDao">
+
+    <select id="selectListByCondition" resultType="com.gdeastriver.datasync.pojo.MealRecords">
+          select  emp_id, card_id, sign_time,convert(VARCHAR,card_consume) as card_consume,
+            convert(VARCHAR,card_balance) as card_balance,kind,pos_sequ,card_sequ,clock_Id,nRecSeq from  MealRecords
+          where nRecSeq between #{start} and  #{end}
+    </select>
+
+    <select id="getMaxNRecSeq" resultType="int">
+        select ISNULL(MAX(nRecSeq),0) from MealRecords
+    </select>
+
+</mapper>
