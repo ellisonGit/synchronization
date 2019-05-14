@@ -16,4 +16,6 @@ public interface EmployeeDao {
     List<Employee> selectAll();
 
     int countAll();
+
+    int updateState(Employee employee);
 }

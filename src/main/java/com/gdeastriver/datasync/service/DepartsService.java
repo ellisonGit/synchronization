@@ -16,4 +16,6 @@ public interface DepartsService {
     List<Departs> selectAll();
 
     int countAll();
+
+    int updateState (Departs departs);
 }

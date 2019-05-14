@@ -17,5 +17,7 @@ public interface DepartsDao {
     List<Departs> selectAll();
 
     int countAll();
+
+    int updateState(Departs departs);
 }
 

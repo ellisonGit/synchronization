@@ -4,11 +4,26 @@
 <mapper namespace="com.gdeastriver.datasync.dao.DepartsDao">
 
     <select id="selectAll" resultType="com.gdeastriver.datasync.pojo.Departs">
-      select  depart_id,depart_name,group_id,inside_id,principal,emp_prefix  from  Departs
+      select  depart_id,depart_name,group_id,inside_id,principal,emp_prefix  from  Departs where principal=0
     </select>
 
     <select id="countAll" resultType="int">
-        select count(*) from Departs
+        select count(*) from Departs where principal=0
     </select>
 
+    <!-- 更新部门同步标识状态 -->
+    <update id="updateState" parameterType="com.gdeastriver.datasync.dao.DepartsDao" >
+        update Departs
+        <set >
+            <if test="principal != null" >
+                principal = #{principal,jdbcType=VARCHAR},
+            </if>
+
+        </set>
+        where 1=1
+        <if test="departId != null and departId != ''">
+            and depart_id  = #{departId}
+        </if>
+
+    </update>
 </mapper>

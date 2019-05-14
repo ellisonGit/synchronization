@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @MapperScan("com.gdeastriver.datasync.dao")
-//@EnableScheduling//启动定时任务配置
+@EnableScheduling//启动定时任务配置
 @SpringBootApplication
 public class DatasyncApplication {
 

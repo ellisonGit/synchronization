@@ -3,6 +3,7 @@ package com.gdeastriver.datasync.service.impl;
 import com.gdeastriver.datasync.dao.EmployeeDao;
 import com.gdeastriver.datasync.pojo.Employee;
 import com.gdeastriver.datasync.service.EmployeeService;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +30,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public int countAll() {
         return this.employeeDao.countAll();
+    }
+
+    @Override
+    public int updateState( Employee employee) {
+        return employeeDao.updateState(employee);
     }
 }

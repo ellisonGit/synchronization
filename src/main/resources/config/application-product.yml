@@ -11,9 +11,11 @@ spring:
     druid:
       username: sa
       password: 123456
-      url: jdbc:sqlserver://localhost:1433;databasename=EastRiver
+      url: jdbc:sqlserver://192.168.0.107:1433;databasename=EastRiver
+
     schema: classpath:schema.sql
 
 enterprise:
   code: LF6L2YBL
-  serverurl: http://www.130xxxx5088.com
+  #serverurl: http://www.130xxxx5088.com
+  serverurl: http://localhost:8080

@@ -16,4 +16,6 @@ public interface EmployeeService {
     List<Employee> selectAll();
 
     int countAll();
+
+    int updateState(Employee employee );
 }

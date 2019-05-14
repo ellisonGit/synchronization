@@ -20,4 +20,7 @@ public class Employee extends  Base{
 
     private String departId ;
 
+    //标识（0：未同步，1：已同步）
+    private int Bless;
+
 }

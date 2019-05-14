@@ -4,11 +4,25 @@
 <mapper namespace="com.gdeastriver.datasync.dao.EmployeeDao">
 
     <select id="selectAll" resultType="com.gdeastriver.datasync.pojo.Employee">
-          select  emp_id,emp_fname,card_id,depart_id  from  Employee
+          select  emp_id,emp_fname,card_id,depart_id,Bless from  Employee where Bless=0
     </select>
 
     <select id="countAll" resultType="int">
-        select count(*) from Employee
+        select count(*) from Employee where Bless=0
     </select>
 
+    <update id="updateState" parameterType="com.gdeastriver.datasync.dao.EmployeeDao" >
+        update Employee
+        <set >
+            <if test="Bless != null" >
+                bless = #{Bless,jdbcType=VARCHAR},
+            </if>
+
+        </set>
+        where 1=1
+        <if test="empId != null and empId != ''">
+            and emp_id  = #{empId}
+        </if>
+
+    </update>
 </mapper>

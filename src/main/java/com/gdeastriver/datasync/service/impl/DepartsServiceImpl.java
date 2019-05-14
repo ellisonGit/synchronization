@@ -30,4 +30,9 @@ public class DepartsServiceImpl implements DepartsService {
     public int countAll() {
         return this.departsDao.countAll();
     }
+
+    @Override
+    public int updateState( Departs departs) {
+        return departsDao.updateState(departs);
+    }
 }
