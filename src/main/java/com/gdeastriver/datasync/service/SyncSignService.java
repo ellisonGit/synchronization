@@ -12,6 +12,7 @@ import com.gdeastriver.datasync.pojo.SyncSign;
 public interface SyncSignService {
 
     SyncSign getSyncSign();
+    SyncSign getSyncSignToo();
 
     int updateSyncSign(SyncSign syncSign);
 }

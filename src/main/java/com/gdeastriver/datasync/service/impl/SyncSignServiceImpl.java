@@ -25,6 +25,10 @@ public class SyncSignServiceImpl implements SyncSignService {
     }
 
     @Override
+    public SyncSign getSyncSignToo() {
+        return this.syncSignDao.getSyncSignToo();
+    }
+    @Override
     public int updateSyncSign(SyncSign syncSign) {
         try{
             this.syncSignDao.updateSyncSign(syncSign);

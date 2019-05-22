@@ -41,6 +41,9 @@ public class Task {
     private MealRecordService mealRecordService;
 
     @Autowired
+    private MChargeRecordsService mChargeRecordsService;
+
+    @Autowired
     private SyncSignService syncSignService;
 
     /**
@@ -129,15 +132,15 @@ public class Task {
     }
 
 //    @Scheduled(cron="0 0 */2 * * ?")   //每隔2小时执行一次
-    //@Scheduled(cron="0 */1 * * * ?")   //每1分钟执行一次
+    @Scheduled(cron="0 */1 * * * ?")   //每1分钟执行一次
     public void syncEmployeeData() throws InterruptedException {
 
         System.out.println("------------准备同步[员工]数据...-------------");
 
-        int serverClockCount = SyncDataUtil.getServerEmployeeCount(serverUrl,eCode);
+       int serverClockCount = SyncDataUtil.getServerEmployeeCount(serverUrl,eCode);//获取平台员工总数
         int localClockCount = employeeService.countAll();
 
-        if(localClockCount == 0 || serverClockCount == 0){
+        if(localClockCount == 0 ||serverClockCount==localClockCount){
             System.out.println("------------没有需要同步的[员工]数据-------------");
             return ;
         }
@@ -150,7 +153,7 @@ public class Task {
         }
 
         Thread.sleep(500);
-*/
+*/      //todo Bless参数数据库要设置默认为0
         List<Employee> list = employeeService.selectAll();
         for(int i=0;i<list.size();i++){
             Employee employee = list.get(i);
@@ -171,7 +174,7 @@ public class Task {
         System.out.println("----------[员工]数据同步完成！！！----------");
     }
 
-    //@Scheduled(cron="0 */1 * * * ?")   //每1分钟执行一次
+    @Scheduled(cron="0 */1 * * * ?")   //每1分钟执行一次
     public void syncConsumeData() throws InterruptedException {
 
         System.out.println("------------准备同步[消费记录]数据...-------------");
@@ -228,11 +231,82 @@ public class Task {
 
         System.out.println(" ");
         System.out.println("----------------------------------------------");
-        System.out.println("[员工]数据同步完成！！！");
+        System.out.println("[消费记录]数据同步完成！！！");
         System.out.println("同步成功，并发送模板消息成功的数量有："+successCount);
         System.out.println("同步成功，但是发送模板消息失败的数量有："+failureCount);
         System.out.println("同步成功，用户未关注公众号的数量有："+unconcerned);
         System.out.println("----------------------------------------------");
         System.out.println(" ");
+    }
+
+
+    @Scheduled(cron="0 */1 * * * ?")   //每1分钟执行一次
+    public void syncChargeData() throws InterruptedException {
+
+        System.out.println("------------准备同步[充值记录]数据...-------------");
+
+        int start = syncSignService.getSyncSignToo().getSignConsume();
+        int end = mChargeRecordsService.getMaxNRecSeq();
+
+        if (end == 0 || start == end) {
+            System.out.println("------------没有需要同步的[充值记录]数据-------------");
+            return;
+        }
+
+        Thread.sleep(500);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("start", start + 1);
+        map.put("end", end);
+        List<MChargeRecords> list = mChargeRecordsService.selectListByCondition(map);
+
+        /**
+         * 同步成功，并发送模板消息成功
+         */
+        int successCount = 0;
+        /**
+         * 同步成功，但是发送模板消息失败
+         */
+        int failureCount = 0;
+        /**
+         * 同步成功，用户未关注公众号
+         */
+        int unconcerned = 0;
+        for (int i = 0; i < list.size(); i++) {
+            MChargeRecords mChargeRecords = list.get(i);
+            int result = SyncDataUtil.addMealRecharge(serverUrl, eCode, mChargeRecords);
+            if (result == -1) {
+                  System.out.println("同步充值数据失败");
+            } else {
+                //Thread.sleep(500);
+                if (result == 100) {
+                    successCount++;
+                }
+                if (result == 101) {
+                    failureCount++;
+                }
+                if (result == 0) {
+                    unconcerned++;
+                }
+
+
+            /**
+             * 更新标记位置
+             */
+            SyncSign syncSign = new SyncSign();
+            syncSign.setId(2);
+            syncSign.setSignConsume(end);
+            this.syncSignService.updateSyncSign(syncSign);
+
+            System.out.println(" ");
+            System.out.println("----------------------------------------------");
+            System.out.println("[充值]数据同步完成！！！");
+            System.out.println("同步成功，并发送模板消息成功的数量有：" + successCount);
+            System.out.println("同步成功，但是发送模板消息失败的数量有：" + failureCount);
+            System.out.println("同步成功，用户未关注公众号的数量有：" + unconcerned);
+            System.out.println("----------------------------------------------");
+            System.out.println(" ");
+        }
+    }
     }
 }

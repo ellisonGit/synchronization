@@ -1,9 +1,6 @@
 package com.gdeastriver.datasync.util;
 
-import com.gdeastriver.datasync.pojo.Clocks;
-import com.gdeastriver.datasync.pojo.Departs;
-import com.gdeastriver.datasync.pojo.Employee;
-import com.gdeastriver.datasync.pojo.MealRecords;
+import com.gdeastriver.datasync.pojo.*;
 import com.gdeastriver.datasync.vo.Response;
 
 /**
@@ -205,6 +202,32 @@ public class SyncDataUtil {
             return response.getData();
         }else{
             System.out.println("同步本地[消费记录]数据到服务端时报错：");
+            return -1;
+        }
+    }
+
+    /**
+     * 添加充值记录数据到服务端的数据库
+     * @param eCode
+     * @param mChargeRecords
+     * @return
+     */
+    public static int addMealRecharge(String serverUrl,String eCode, MChargeRecords mChargeRecords){
+
+        String url = serverUrl+"/api/sync/addCharge";
+        String param = "eCode="+eCode+"&empId="+mChargeRecords.getEmpId()+"&cardId="+mChargeRecords.getCardId()+
+                "&chargeMoney="+mChargeRecords.getChargeMoney()+"&cardBalance="+mChargeRecords.getCardBalance()+
+                "&opYmd="+mChargeRecords.getOpYmd().toLocaleString()+"&cardTimes="+mChargeRecords.getCardTimes()+
+                "&cardSequ="+mChargeRecords.getCardSequ()+"&Kind="+mChargeRecords.getKind()+"&opUser="+mChargeRecords.getOpUser()+
+                "&opDate="+mChargeRecords.getOpDate().toLocaleString()+"&remark="+mChargeRecords.getRemark()+"&difineSequ="+mChargeRecords.getDifineSequ();
+
+        String result = MyRequestUtil.sendPost(url,param);
+
+        Response  response = (Response) GsonUtil.jsonToObject(result,Response.class);
+        if(response.getCode().equals("000001") && response.getData() >= 0){
+            return response.getData();
+        }else{
+            System.out.println("同步本地[充值记录]数据到服务端时报错：");
             return -1;
         }
     }
