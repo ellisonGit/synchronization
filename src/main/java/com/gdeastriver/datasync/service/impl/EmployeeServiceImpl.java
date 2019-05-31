@@ -36,4 +36,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public int updateState( Employee employee) {
         return employeeDao.updateState(employee);
     }
+
+    @Override
+    public String selectCardId( String empId) {
+        return employeeDao.selectCardId(empId);
+    }
 }

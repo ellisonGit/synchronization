@@ -18,4 +18,6 @@ public interface EmployeeService {
     int countAll();
 
     int updateState(Employee employee );
+
+    String selectCardId(String empId);
 }

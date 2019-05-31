@@ -6,6 +6,10 @@
     <select id="selectAll" resultType="com.gdeastriver.datasync.pojo.Employee">
           select  emp_id,emp_fname,card_id,depart_id,Bless from  Employee where Bless=0
     </select>
+ <!-- 根据emp_id查询card_id-->
+    <select id="selectCardId" resultType="java.lang.String">
+          select  card_id from  Employee where emp_id= #{empId}
+    </select>
 
     <select id="countAll" resultType="int">
         select count(*) from Employee where Bless=0

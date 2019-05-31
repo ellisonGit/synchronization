@@ -18,4 +18,6 @@ public interface EmployeeDao {
     int countAll();
 
     int updateState(Employee employee);
+
+    String selectCardId(String empId);
 }

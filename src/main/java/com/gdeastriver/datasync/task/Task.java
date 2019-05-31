@@ -90,7 +90,7 @@ public class Task {
     }
 
     //    @Scheduled(cron="0 0 */2 * * ?")   //每隔2小时执行一次
-  @Scheduled(cron="0 */1 * * * ?")   //每1分钟执行一次`
+  //@Scheduled(cron="0 */1 * * * ?")   //每1分钟执行一次`
     public void syncDepartsData() throws InterruptedException {
 
         System.out.println("------------准备同步[部门]数据...-------------");
@@ -132,7 +132,7 @@ public class Task {
     }
 
 //    @Scheduled(cron="0 0 */2 * * ?")   //每隔2小时执行一次
-    @Scheduled(cron="0 */1 * * * ?")   //每1分钟执行一次
+   // @Scheduled(cron="0 */1 * * * ?")   //每1分钟执行一次
     public void syncEmployeeData() throws InterruptedException {
 
         System.out.println("------------准备同步[员工]数据...-------------");
@@ -174,7 +174,7 @@ public class Task {
         System.out.println("----------[员工]数据同步完成！！！----------");
     }
 
-    @Scheduled(cron="0 */1 * * * ?")   //每1分钟执行一次
+   // @Scheduled(cron="0 */1 * * * ?")   //每1分钟执行一次
     public void syncConsumeData() throws InterruptedException {
 
         System.out.println("------------准备同步[消费记录]数据...-------------");
@@ -240,7 +240,7 @@ public class Task {
     }
 
 
-    @Scheduled(cron="0 */1 * * * ?")   //每1分钟执行一次
+  //  @Scheduled(cron="0 */1 * * * ?")   //每1分钟执行一次
     public void syncChargeData() throws InterruptedException {
 
         System.out.println("------------准备同步[充值记录]数据...-------------");
