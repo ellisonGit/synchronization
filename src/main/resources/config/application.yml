@@ -28,7 +28,6 @@ spring:
 
 
 
-
   thymeleaf:
     content-type: text/html
     mode: LEGACYHTML5
@@ -40,4 +39,10 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   config-location: classpath:config/MyBatisConfig.xml
-
+  #打印SQL
+logging:
+  level:
+    com.gdeastriver.datasync.dao : debug
+    #保存日志
+  file: ./logs/core.log
+  root: INFO

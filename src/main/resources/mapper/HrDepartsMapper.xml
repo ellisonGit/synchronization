@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gdeastriver.synchronization.dao.HrDepartsDao">
+
+    <select id="selectAll" resultType="com.gdeastriver.synchronization.pojo.HrDeparts">
+     select uuid,records,timestamps from  HrDeparts where state=0
+    </select>
+
+
+    <!-- 插入json串 -->
+    <insert id="insertJsonString" parameterType="com.gdeastriver.synchronization.dao.HrDepartsDao">
+        insert into HrDeparts
+          (uuid,versionid,timestamps,records,deptno,deptname,parentdeptno,parentdeptname,olddeptno,
+          olddeptname,optype,state,memo,handletime)
+         values (
+          #{uuid,jdbcType=VARCHAR},#{versionid,jdbcType=VARCHAR},#{timestamps,jdbcType=VARCHAR},#{records,jdbcType=VARCHAR},
+          #{deptno,jdbcType=VARCHAR},#{deptname,jdbcType=VARCHAR},#{parentdeptno,jdbcType=VARCHAR},#{parentdeptname,jdbcType=VARCHAR},
+          #{olddeptno,jdbcType=VARCHAR},#{olddeptname,jdbcType=VARCHAR},#{optype},#{state},
+          #{memo,jdbcType=VARCHAR},#{handletime,jdbcType=VARCHAR}
+        )
+
+    </insert>
+
+    <!-- HR部门存储过程 -->
+    <select  id="pInsertAll"  statementType="CALLABLE" resultType="java.lang.String" >
+
+     {CALL  HRSYNC ()}
+
+    </select >
+</mapper>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gdeastriver.synchronization.dao.HrEmployeeDao">
+    <!-- 插入json串 -->
+    <insert id="insertJsonString" parameterType="com.gdeastriver.synchronization.pojo.HrEmployee">
+        insert into HrEmployee
+         (uuid,versionid,timestamps,records,empno,empname,deptno,empstate,hiredate,
+          leavedate,optype,state,memo,handletime,del)
+         values (
+          #{uuid,jdbcType=VARCHAR},#{versionid,jdbcType=VARCHAR},#{timestamps,jdbcType=VARCHAR},#{records,jdbcType=VARCHAR},
+          #{empno,jdbcType=VARCHAR},#{empname,jdbcType=VARCHAR},#{deptno,jdbcType=VARCHAR},#{empstate,jdbcType=VARCHAR},
+          #{hiredate,jdbcType=VARCHAR},#{leavedate,jdbcType=VARCHAR},#{optype},#{state},
+          #{memo,jdbcType=VARCHAR},#{handletime,jdbcType=VARCHAR},#{del}
+        )
+
+    </insert>
+
+
+ <!-- 修改-->
+    <update id="updateEmployee" parameterType="com.gdeastriver.synchronization.dao.HrEmployeeDao" >
+        update HrEmployee
+        <set >
+            <if test="versionid != null" >
+                versionid = #{versionid,jdbcType=VARCHAR},
+            </if>
+            <if test="records != null" >
+                records = #{records,jdbcType=VARCHAR},
+            </if>
+            <if test="empno != null" >
+                empno = #{empno,jdbcType=VARCHAR},
+            </if>
+            <if test="empname != null" >
+                empname = #{empname,jdbcType=VARCHAR},
+            </if>
+            <if test="deptno != null" >
+                deptno = #{deptno,jdbcType=VARCHAR},
+            </if>
+            <if test="empstate != null" >
+                empstate = #{empstate,jdbcType=VARCHAR},
+            </if>
+            <if test="leavedate != null" >
+                leavedate = #{leavedate,jdbcType=VARCHAR},
+            </if>
+            <if test="optype != null" >
+                optype = #{optype},
+            </if>
+            <if test="state != null" >
+                state = #{state},
+            </if>
+            <if test="memo != null" >
+                memo = #{memo,jdbcType=VARCHAR},
+            </if>
+            <if test="handletime != null" >
+                handletime = #{handletime,jdbcType=VARCHAR},
+            </if>
+            <if test="del != null" >
+                del = #{del},
+            </if>
+
+
+        </set>
+        where 1=1 and state  =0
+        <if test="empno != null and empno != ''">
+            and empno  = #{empno}
+        </if>
+    </update>
+
+    <!--删除-->
+  <!--  <delete id="deleteHrEmployee"  parameterType="com.gdeastriver.synchronization.dao.HrEmployeeDao">
+        DELETE FROM HrEmployee WHERE empno = #{empno} and state  =0
+</delete>-->
+
+
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gdeastriver.synchronization.dao.TimeRecordsDao">
+
+    <select id="getMaxNRecSeq" resultType="int">
+        select ISNULL(MAX(id),0) from TimeRecords
+    </select>
+
+
+    <!--查询打卡记录-->
+    <select id="selectTimeRecordsList" resultType="com.gdeastriver.synchronization.pojo.TimeRecords" parameterType="map">
+     SELECT top 1000
+	  id,emp_id,sign_time
+FROM
+	TimeRecords
+
+WHERE
+	id >  #{0,jdbcType=VARCHAR}
+    </select>
+</mapper>

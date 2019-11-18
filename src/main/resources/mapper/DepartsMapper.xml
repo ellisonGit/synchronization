@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.gdeastriver.datasync.dao.DepartsDao">
+<mapper namespace="com.gdeastriver.synchronization.dao.DepartsDao">
 
-    <select id="selectAll" resultType="com.gdeastriver.datasync.pojo.Departs">
+    <select id="selectAll" resultType="com.gdeastriver.synchronization.pojo.Departs">
       select  depart_id,depart_name,group_id,inside_id,principal,emp_prefix  from  Departs where principal=0
     </select>
 
@@ -12,7 +12,7 @@
     </select>
 
     <!-- 更新部门同步标识状态 -->
-    <update id="updateState" parameterType="com.gdeastriver.datasync.dao.DepartsDao" >
+    <update id="updateState" parameterType="com.gdeastriver.synchronization.dao.DepartsDao" >
         update Departs
         <set >
             <if test="principal != null" >
